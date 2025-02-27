@@ -74,6 +74,13 @@ export default function AccountForm({ user }: { user: User | null }) {
     }
   }
 
+    // 資料表的CRUD
+    const fetchInstruments = async () => {
+      const { data: instruments } = await supabase.from("instruments").select();
+      console.log(instruments);
+    };
+    fetchInstruments();
+
   return (
     <div className="form-widget">
       <Avatar
