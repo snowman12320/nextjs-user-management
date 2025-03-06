@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "scan": "next dev & npx react-scan@latest localhost:3000"
   },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
@@ -20,6 +21,7 @@
     "next": "14.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-scan": "^0.2.8",
     "typescript": "5.0.4"
   }
 }

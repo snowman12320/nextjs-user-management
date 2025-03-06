@@ -1,4 +1,5 @@
 import './globals.css'
+import { ReactScan } from "./ReactScanComponent";
 
 export const metadata = {
   title: 'User Management',
@@ -8,6 +9,7 @@ export const metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <ReactScan />
       <body>
         <div className="container" style={{ padding: '50px 0 100px 0' }}>
           {children}
