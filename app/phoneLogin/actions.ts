@@ -25,12 +25,11 @@ export async function signInWithOtp(formData: FormData) {
 
 export async function verifyOtp(formData: FormData) {
   const supabase = await createClient()
-
   const data = {
     phone: formData.get('phone') as string,
     token: formData.get('token') as string,
   }
-
+  
   const { error } = await supabase.auth.verifyOtp({
     phone: data.phone,
     token: data.token,
@@ -48,22 +47,20 @@ export async function verifyOtp(formData: FormData) {
 export async function signupWithPassport(formData: FormData) {
   const supabase = await createClient()
 
-  const data = {
-    phone: formData.get('phone') as string,
-    password: formData.get('password') as string,
-  }
+  const phone = formData.get('phone') as string
+  const password = formData.get('password') as string
 
   const { error } = await supabase.auth.signUp({
-    phone: data.phone,
-    password: data.password,
+    phone,
+    password,
   })
 
   if (error) {
     redirect('/error')
   }
 
-  revalidatePath('/', 'layout')
-  redirect('/account')
+  const redirectUrl = '/phoneLogin/verify?phone=' + encodeURIComponent(phone);
+  return { redirect: redirectUrl };
 } 
 
 export async function signInWithPassword(formData: FormData) {
@@ -80,15 +77,11 @@ export async function signInWithPassword(formData: FormData) {
   })
 
   if (error) {
-    console.info(error);
-    redirect('/error')
+   const response = await signupWithPassport(formData);
+    if (response.redirect) {
+      window.location.href = response.redirect;
+    }
+  } else {
+    redirect('/account')
   }
-
-  redirect('/account')
 }
-
-export async function fetchUser() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser();
-  console.log(user); 
-};
