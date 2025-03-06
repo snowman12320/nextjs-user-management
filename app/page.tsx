@@ -11,7 +11,7 @@ export default function Home() {
         </p>
       </div>
       <div className="col-6 form-widget">
-        <Link href="/login">Auth page</Link>
+        <Link href="/phoneLogin">Auth page</Link>
       </div>
     </div>
   )

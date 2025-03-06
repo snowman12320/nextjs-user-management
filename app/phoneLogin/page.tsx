@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react'
-import { signInWithPassword, signupWithPassport } from './actions'
+import { signInWithPassword } from './actions'
 
 export default function PhoneLoginPage() {
   const [phone, setPhone] = useState('');
@@ -19,23 +19,6 @@ export default function PhoneLoginPage() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (formData: FormData) => {
-    try {
-      await signInWithPassword(formData);
-    } catch (error) {
-      console.info('handleSubmit',error);
-      await signupWithPassport(formData);
-      // In your form submission handler
-      const response = await signupWithPassport(formData);
-      console.info('1',response);
-      if (response.redirect) {
-      window.location.href = response.redirect;
-
-        // or use Next.js router
-        // router.push(response.redirect);
-      }
-    }
-  };
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
       <form className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
@@ -71,7 +54,7 @@ export default function PhoneLoginPage() {
         </div>
 
         <button
-          formAction={handleSubmit}
+          formAction={signInWithPassword}
           className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2 w-full"
         >
           登入/註冊

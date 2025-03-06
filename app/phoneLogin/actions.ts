@@ -16,7 +16,6 @@ export async function signInWithOtp(formData: FormData) {
   })
 
   if (error) {
-    console.info(error);
     redirect('/error')
   }
 
@@ -58,9 +57,6 @@ export async function signupWithPassport(formData: FormData) {
   if (error) {
     redirect('/error')
   }
-
-  const redirectUrl = '/phoneLogin/verify?phone=' + encodeURIComponent(phone);
-  return { redirect: redirectUrl };
 } 
 
 export async function signInWithPassword(formData: FormData) {
@@ -77,10 +73,11 @@ export async function signInWithPassword(formData: FormData) {
   })
 
   if (error) {
-   const response = await signupWithPassport(formData);
-    if (response.redirect) {
-      window.location.href = response.redirect;
-    }
+    // Phone not confirmed
+    // Invalid login credentials
+    // console.info(error.message);
+    signupWithPassport(formData);
+    redirect('/phoneLogin/verify?phone=' + encodeURIComponent(data.phone))
   } else {
     redirect('/account')
   }
