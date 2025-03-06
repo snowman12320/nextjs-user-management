@@ -4,14 +4,13 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 
-export async function signInWithPhone(formData: FormData) {
+export async function signInWithOtp(formData: FormData) {
   const supabase = await createClient()
 
   const data = {
     phone: formData.get('phone') as string,
   }
 
-  console.log(data);
   const { error } = await supabase.auth.signInWithOtp({
     phone: data.phone,
   })
@@ -46,7 +45,7 @@ export async function verifyOtp(formData: FormData) {
   redirect('/account')
 }
 
-export async function signupWithPhone(formData: FormData) {
+export async function signupWithPassport(formData: FormData) {
   const supabase = await createClient()
 
   const data = {
@@ -66,3 +65,30 @@ export async function signupWithPhone(formData: FormData) {
   revalidatePath('/', 'layout')
   redirect('/account')
 } 
+
+export async function signInWithPassword(formData: FormData) {
+  const supabase = await createClient()
+
+  const data = {
+    phone: formData.get('phone') as string,
+    password: formData.get('password') as string
+  }
+
+  const { error } = await supabase.auth.signInWithPassword({
+    phone: data.phone,
+    password:data.password
+  })
+
+  if (error) {
+    console.info(error);
+    redirect('/error')
+  }
+
+  redirect('/account')
+}
+
+export async function fetchUser() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser();
+  console.log(user); 
+};

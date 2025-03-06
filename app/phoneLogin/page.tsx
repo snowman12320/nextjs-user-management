@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react'
-import { signInWithPhone } from './actions'
+import { signInWithOtp } from './actions'
 
 export default function PhoneLoginPage() {
   const [phone, setPhone] = useState('');
@@ -32,10 +32,10 @@ export default function PhoneLoginPage() {
       <p className="text-sm mt-1">{phone}</p>
         </div>
         <button
-          formAction={signInWithPhone}
+          formAction={signInWithOtp}
           className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
         >
-          發送驗證碼
+          登入
         </button>
       </form>
     </div>
